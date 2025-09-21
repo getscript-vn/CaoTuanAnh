@@ -1,5 +1,5 @@
 --[[
-
+XZ Redit
 
 
 ██╗     ██╗   ██╗███╗   ██╗ █████╗     ██╗███╗   ██╗████████╗███████╗██████╗ ███████╗ █████╗  ██████╗███████╗    ███████╗██╗   ██╗██╗████████╗███████╗
@@ -1864,8 +1864,147 @@ end
 local CSWZUI = isStudio and script.Parent:WaitForChild("CSWZ UI") or game:GetObjects("rbxassetid://86467455075715")[1]
 
 local SizeBleh = nil
+function NewCreateButton(bind)
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local VirtualUser = game:GetService("VirtualUser")
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+for i,v in pairs(game.CoreGui:GetChildren()) do
+    if v.Name == "ZTAHub" then
+        v:Destroy()
+    end
+end
+local utils = {}
+utils.create = function(class, prop)
+	local obj = Instance.new(class)
 
+	for prop, v in next, prop do
+		obj[prop] = v
+	end
+
+	pcall(function()
+		obj.AutoButtonColor = false
+	end)
+	
+	return obj
+end
+
+local ZTAHub = utils.create("ScreenGui", {
+	Name = "ZTAHub",
+	Parent = game:GetService('CoreGui'),
+	ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+})
+
+local Button = utils.create("TextButton", {
+	Name = "Button",
+	Parent = ZTAHub,
+	BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+	BorderColor3 = Color3.fromRGB(0, 0, 0),
+	BorderSizePixel = 0,
+	Position = UDim2.new(0.246000007, 0, 0.335999995, 0),
+	Size = UDim2.new(0, 50, 0, 50),
+	Font = Enum.Font.SourceSans,
+	Text = "",
+	TextColor3 = Color3.fromRGB(0, 0, 0),
+	TextSize = 14.000,
+})
+
+utils.create("UICorner", {
+	CornerRadius = UDim.new(1, 0),
+	Parent = Button,
+})
+
+local Image = utils.create("ImageLabel", {
+	Name = "Image",
+	Parent = Button,
+	BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+	BackgroundTransparency = 1.000,
+	BorderColor3 = Color3.fromRGB(0, 0, 0),
+	BorderSizePixel = 0,
+	Size = UDim2.new(1, 0, 1, 0),
+	Image = "rbxassetid://71848954352938",
+})
+
+local Frame = utils.create("Frame", {
+	Parent = Image,
+	BackgroundColor3 = Color3.fromRGB(200, 200, 200),
+	BackgroundTransparency = 0.800,
+	BorderColor3 = Color3.fromRGB(0, 0, 0),
+	BorderSizePixel = 0,
+	Size = UDim2.new(1, 0, 1, 0),
+})
+
+utils.create("UICorner", {
+	CornerRadius = UDim.new(1, 0),
+	Parent = Frame,
+})
+    local dragging = false
+    local dragInput, dragStart, startPos
+
+local TweenService = game:GetService("TweenService")
+local Xoay = false
+local function RotateOnce()
+	if not Button.Rotation then
+		Button.Rotation = 0
+	end
+	
+	local tweenInfo = TweenInfo.new(
+		0.5,
+		Enum.EasingStyle.Linear,
+		Enum.EasingDirection.Out, 
+		0,
+		false,
+		0
+	)
+	Xoay=true
+	local tween = TweenService:Create(Button, tweenInfo, {Rotation = Button.Rotation + 360})
+	tween:Play()
+	wait(0.5)
+	Xoay=false
+end
+
+    Button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = Button.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    Button.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            Button.Position = UDim2.new(
+                startPos.X.Scale, startPos.X.Offset + delta.X,
+                startPos.Y.Scale, startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+
+Button.MouseButton1Click:Connect(function()
+	if not Xoay then
+		RotateOnce()
+	end
+game:GetService("VirtualInputManager"):SendKeyEvent(true,(bind or Enum.KeyCode.K),false,game)
+game:GetService("VirtualInputManager"):SendKeyEvent(false,(bind or Enum.KeyCode.K),false,game)
+ZTAHub:Destroy()
+end)
+end
 local function Hide(Window, bind, notif)
+	NewCreateButton(bind)
 	SizeBleh = Window.Size
 	bind = string.split(tostring(bind), "Enum.KeyCode.")
 	bind = bind[2]
@@ -2287,7 +2426,7 @@ function CSWZ:CreateWindow(WindowSettings)
 
 	Main.Title.Title.Text = WindowSettings.Name
 	Main.Title.subtitle.Text = WindowSettings.Subtitle
-	Main.Logo.Image = "rbxassetid://" .. WindowSettings.LogoID
+	Main.Logo.Image = "rbxassetid://71848954352938" 
 	Main.Visible = true
 	Main.BackgroundTransparency = 1
 	Main.Size = MainSize
@@ -2479,6 +2618,22 @@ function CSWZ:CreateWindow(WindowSettings)
 	end
 
 	if WindowSettings.LoadingEnabled then
+		                local function TypeWriter(textLabel, fullText, duration)
+            task.spawn(function()
+        textLabel.Text = ""
+        local length = #fullText
+        local delayPerChar = duration / length
+
+        for i = 1, length do
+            textLabel.Text = string.sub(fullText, 1, i)
+            task.wait(delayPerChar)
+        end
+    end)
+    end
+    TypeWriter(LoadingFrame.Frame.Frame.Title, WindowSettings.LoadingTitle, 1)
+    TypeWriter(LoadingFrame.Frame.Frame.Subtitle, WindowSettings.LoadingSubtitle, 1)
+    TypeWriter(LoadingFrame.Version, LoadingFrame.Frame.Frame.Title.Text == "CSWZ Interface Suite" and Release or "CSWZ UI", 1)
+
 		task.wait(0.3)
 		TweenService:Create(LoadingFrame.Frame.Frame.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0}):Play()
 		TweenService:Create(LoadingFrame.Frame.ImageLabel, TweenInfo.new(0.3, Enum.EasingStyle.Exponential), {ImageTransparency = 0}):Play()
