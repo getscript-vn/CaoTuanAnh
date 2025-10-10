@@ -2345,7 +2345,7 @@ function ButtonZZZZZ:NewCreateButton(bind,Window)
             RotateOnce()
         end
 
-        Unhide(Main, Window.CurrentTab)
+        Unhide(Main, "Home")
         ZTAHub:Destroy()
     end)
 end
