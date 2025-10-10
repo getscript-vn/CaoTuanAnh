@@ -1867,7 +1867,7 @@ local SizeBleh = nil
 local ButtonZZZZZ = {}
 
 local function Hide(Window, bind, notif)
-	ButtonZZZZZ:NewCreateButton(bind)
+	ButtonZZZZZ:NewCreateButton(bind,Window)
 	SizeBleh = Window.Size
 	bind = string.split(tostring(bind), "Enum.KeyCode.")
 	bind = bind[2]
@@ -2221,7 +2221,7 @@ local function Unhide(Window, currentTab)
 
 end
 
-function ButtonZZZZZ:NewCreateButton(bind)
+function ButtonZZZZZ:NewCreateButton(bind,Window)
     local Players = game:GetService("Players")
     local UserInputService = game:GetService("UserInputService")
     local VirtualInputManager = game:GetService("VirtualInputManager")
