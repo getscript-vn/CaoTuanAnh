@@ -1864,138 +1864,10 @@ end
 local CSWZUI = isStudio and script.Parent:WaitForChild("CSWZ UI") or game:GetObjects("rbxassetid://86467455075715")[1]
 
 local SizeBleh = nil
-function NewCreateButton(bind)
-    local Players = game:GetService("Players")
-    local UserInputService = game:GetService("UserInputService")
-    local VirtualInputManager = game:GetService("VirtualInputManager")
-    local TweenService = game:GetService("TweenService")
-    local player = Players.LocalPlayer
-
-    for _, v in pairs(game.CoreGui:GetChildren()) do
-        if v.Name == "ZTAHub" then
-            v:Destroy()
-        end
-    end
-
-    local utils = {}
-    utils.create = function(class, props)
-        local obj = Instance.new(class)
-        for prop, val in pairs(props) do
-            obj[prop] = val
-        end
-        pcall(function() obj.AutoButtonColor = false end)
-        return obj
-    end
-
-    local ZTAHub = utils.create("ScreenGui", {
-        Name = "ZTAHub",
-        Parent = game.CoreGui,
-        ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-    })
-
-    local Button = utils.create("TextButton", {
-        Name = "Button",
-        Parent = ZTAHub,
-        BackgroundColor3 = Color3.fromRGB(0, 0, 0),
-        BorderSizePixel = 0,
-        Position = UDim2.new(0.246, 0, 0.336, 0),
-        Size = UDim2.new(0, 50, 0, 50),
-        Font = Enum.Font.SourceSans,
-        Text = "",
-        TextColor3 = Color3.fromRGB(0, 0, 0),
-        TextSize = 14,
-    })
-
-    utils.create("UICorner", {
-        CornerRadius = UDim.new(1, 0),
-        Parent = Button,
-    })
-
-    local Image = utils.create("ImageLabel", {
-        Name = "Image",
-        Parent = Button,
-        BackgroundTransparency = 1,
-        Size = UDim2.new(1, 0, 1, 0),
-        Image = "rbxassetid://71848954352938",
-    })
-
-    local Frame = utils.create("Frame", {
-        Parent = Image,
-        BackgroundColor3 = Color3.fromRGB(200, 200, 200),
-        BackgroundTransparency = 0.8,
-        BorderSizePixel = 0,
-        Size = UDim2.new(1, 0, 1, 0),
-    })
-
-    utils.create("UICorner", {
-        CornerRadius = UDim.new(1, 0),
-        Parent = Frame,
-    })
-
-    --=== Kéo nút ===--
-    local dragging = false
-    local dragInput, dragStart, startPos
-    local moved = false
-
-    Button.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            moved = false
-            dragStart = input.Position
-            startPos = Button.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    Button.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    UserInputService.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            local delta = input.Position - dragStart
-            if math.abs(delta.X) > 2 or math.abs(delta.Y) > 2 then
-                moved = true -- đánh dấu là đang kéo thật
-            end
-            Button.Position = UDim2.new(
-                startPos.X.Scale, startPos.X.Offset + delta.X,
-                startPos.Y.Scale, startPos.Y.Offset + delta.Y
-            )
-        end
-    end)
-
-    --=== Hiệu ứng xoay ===--
-    local Xoay = false
-    local function RotateOnce()
-        if not Button.Rotation then Button.Rotation = 0 end
-        Xoay = true
-        local tween = TweenService:Create(Button, TweenInfo.new(0.5, Enum.EasingStyle.Linear), {Rotation = Button.Rotation + 360})
-        tween:Play()
-        tween.Completed:Wait()
-        Xoay = false
-    end
-
-    --=== Sự kiện click ===--
-    Button.MouseButton1Click:Connect(function()
-        if moved then return end -- bỏ qua nếu vừa kéo
-        if not Xoay then
-            RotateOnce()
-        end
-
-        VirtualInputManager:SendKeyEvent(true, (bind or Enum.KeyCode.K), false, game)
-        VirtualInputManager:SendKeyEvent(false, (bind or Enum.KeyCode.K), false, game)
-        ZTAHub:Destroy()
-    end)
-end
+local ButtonZZZZZ = {}
 
 local function Hide(Window, bind, notif)
-	NewCreateButton(bind)
+	ButtonZZZZZ:NewCreateButton(bind)
 	SizeBleh = Window.Size
 	bind = string.split(tostring(bind), "Enum.KeyCode.")
 	bind = bind[2]
@@ -2347,6 +2219,135 @@ local function Unhide(Window, currentTab)
 		end
 	end
 
+end
+
+function ButtonZZZZZ:NewCreateButton(bind)
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    local TweenService = game:GetService("TweenService")
+    local player = Players.LocalPlayer
+
+    for _, v in pairs(game.CoreGui:GetChildren()) do
+        if v.Name == "ZTAHub" then
+            v:Destroy()
+        end
+    end
+
+    local utils = {}
+    utils.create = function(class, props)
+        local obj = Instance.new(class)
+        for prop, val in pairs(props) do
+            obj[prop] = val
+        end
+        pcall(function() obj.AutoButtonColor = false end)
+        return obj
+    end
+
+    local ZTAHub = utils.create("ScreenGui", {
+        Name = "ZTAHub",
+        Parent = game.CoreGui,
+        ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+    })
+
+    local Button = utils.create("TextButton", {
+        Name = "Button",
+        Parent = ZTAHub,
+        BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+        BorderSizePixel = 0,
+        Position = UDim2.new(0.246, 0, 0.336, 0),
+        Size = UDim2.new(0, 50, 0, 50),
+        Font = Enum.Font.SourceSans,
+        Text = "",
+        TextColor3 = Color3.fromRGB(0, 0, 0),
+        TextSize = 14,
+    })
+
+    utils.create("UICorner", {
+        CornerRadius = UDim.new(1, 0),
+        Parent = Button,
+    })
+
+    local Image = utils.create("ImageLabel", {
+        Name = "Image",
+        Parent = Button,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 1, 0),
+        Image = "rbxassetid://71848954352938",
+    })
+
+    local Frame = utils.create("Frame", {
+        Parent = Image,
+        BackgroundColor3 = Color3.fromRGB(200, 200, 200),
+        BackgroundTransparency = 0.8,
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 1, 0),
+    })
+
+    utils.create("UICorner", {
+        CornerRadius = UDim.new(1, 0),
+        Parent = Frame,
+    })
+
+    --=== Kéo nút ===--
+    local dragging = false
+    local dragInput, dragStart, startPos
+    local moved = false
+
+    Button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            moved = false
+            dragStart = input.Position
+            startPos = Button.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    Button.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            if math.abs(delta.X) > 2 or math.abs(delta.Y) > 2 then
+                moved = true -- đánh dấu là đang kéo thật
+            end
+            Button.Position = UDim2.new(
+                startPos.X.Scale, startPos.X.Offset + delta.X,
+                startPos.Y.Scale, startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+    --=== Hiệu ứng xoay ===--
+    local Xoay = false
+    local function RotateOnce()
+        if not Button.Rotation then Button.Rotation = 0 end
+        Xoay = true
+        local tween = TweenService:Create(Button, TweenInfo.new(0.5, Enum.EasingStyle.Linear), {Rotation = Button.Rotation + 360})
+        tween:Play()
+        tween.Completed:Wait()
+        Xoay = false
+    end
+
+    --=== Sự kiện click ===--
+    Button.MouseButton1Click:Connect(function()
+        if moved then return end -- bỏ qua nếu vừa kéo
+        if not Xoay then
+            RotateOnce()
+        end
+
+        Unhide()
+        ZTAHub:Destroy()
+    end)
 end
 
 local MainSize
