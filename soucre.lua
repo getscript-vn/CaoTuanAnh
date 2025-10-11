@@ -1866,8 +1866,10 @@ local CSWZUI = isStudio and script.Parent:WaitForChild("CSWZ UI") or game:GetObj
 local SizeBleh = nil
 local ButtonZZZZZ = {}
 
-local function Hide(Window, bind, notif)
+local function Hide(Window, bind, notif,closexxx)
+    if closexxx then
 	ButtonZZZZZ:NewCreateButton(bind,Window)
+    end
 	SizeBleh = Window.Size
 	bind = string.split(tostring(bind), "Enum.KeyCode.")
 	bind = bind[2]
@@ -6808,7 +6810,7 @@ function CSWZ:CreateWindow(WindowSettings)
 	end
 
 	Main.Controls.Close.ImageLabel.MouseButton1Click:Connect(function()
-		Hide(Main, Window.Bind, true)
+		Hide(Main, Window.Bind, true,true)
 		dragBar.Visible = false
 		Window.State = false
 		if UserInputService.KeyboardEnabled == false then
