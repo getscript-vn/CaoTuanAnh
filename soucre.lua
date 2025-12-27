@@ -2275,7 +2275,7 @@ function ButtonZZZZZ:NewCreateButton(bind,Window)
         Parent = Button,
         BackgroundTransparency = 1,
         Size = UDim2.new(1, 0, 1, 0),
-        Image = "rbxassetid://71848954352938",
+        Image = "rbxassetid://119863519759976",
     })
 
     local Frame = utils.create("Frame", {
@@ -2420,7 +2420,7 @@ function CSWZ:CreateWindow(WindowSettings)
 
 	Main.Title.Title.Text = WindowSettings.Name
 	Main.Title.subtitle.Text = WindowSettings.Subtitle
-	Main.Logo.Image = "rbxassetid://71848954352938" 
+	Main.Logo.Image = "rbxassetid://119863519759976" 
 	Main.Visible = true
 	Main.BackgroundTransparency = 1
 	Main.Size = MainSize
@@ -6901,7 +6901,7 @@ if isStudio then
 	local Window = CSWZ:CreateWindow({
 		Name = "Nebula Client - CSWZ Hub | Blade Ball",
 		Subtitle = "by Nebula Softworks",
-		LogoID = "123795201100198",
+		LogoID = "119863519759976",
 		LoadingEnabled = true,
 		LoadingTitle = "Nebula Client (CSWZ Hub)",
 		LoadingSubtitle = "Loading script for Blade Ball",
